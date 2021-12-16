@@ -1,0 +1,78 @@
+@function multiple-box-shadow($n, $color) {
+    $value: "#{random(290)}px #{random(70)}px #{$color}";
+    @for $i from 2 through $n {
+        $value: "#{$value} , #{random(290)}px #{random(70)}px #{$color}";
+    }
+    @return unquote($value);
+}
+
+$pixel: multiple-box-shadow(5, grey);
+$pixel2: multiple-box-shadow(1, grey);
+$pixel3: multiple-box-shadow(2, grey);
+
+.display {
+    position: relative;
+    width: 297px;
+    height: 80px;
+    box-shadow: -1px -1px #0a0a0a, 1px 1px #fff, -2px -2px grey, 2px 2px #dfdfdf;
+    background-color: silver;
+    color: rgba(0, 0, 0, 0.7);
+    text-shadow: 2px 2px 0 rgb(233, 230, 230);
+    input {
+        background-color: transparent;
+        box-shadow: none;
+        width: 100%;
+        &:disabled {
+            background-color: transparent;
+        }
+    }
+    .storagedValue {
+        font-size: 1.3rem;
+        text-align: end;
+        position: absolute;
+        width: 100%;
+        height: 30px;
+        top: 0;
+        left: 0;
+    }
+    .mainValue {
+        font-size: 2rem;
+        text-align: end;
+        position: absolute;
+        width: 100%;
+        height: 50px;
+        bottom: 0;
+        left: 0;
+    }
+
+    .pixels {
+        z-index: 99;
+        position: absolute;
+        width: 3px;
+        height: 8px;
+        -webkit-box-shadow: $pixel3;
+        box-shadow: $pixel3;
+        &:after {
+            content: " ";
+            position: absolute;
+            top: 0px;
+            left: 0;
+            width: 3px;
+            height: 3px;
+            background: transparent;
+            -webkit-box-shadow: $pixel;
+            box-shadow: $pixel;
+        }
+        &:before {
+            content: " ";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 3px;
+            background: transparent;
+            -webkit-box-shadow: $pixel2;
+            box-shadow: $pixel2;
+        }
+    }
+}
